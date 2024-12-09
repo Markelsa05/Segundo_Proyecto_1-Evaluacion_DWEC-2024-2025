@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log('Entrada en la funcion iniciar juego');
       if (validarNombre() === true) 
       {
-          botonJugar.classList.remove("hidden");
+          botonJugar.classList.remove("ocultar");
       }   
       
     }
@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Si el nombre es válido, Muestra un mensaje de bienvenida al juego para el usuario. 
         mensajeDelHeroe.textContent = `A luchar heroe: ${nombreJugador}`;
         console.log(`Nombre del jugador: ${nombreJugador}`);
-        mensajeDelHeroe.classList.remove("hidden");
+        mensajeDelHeroe.classList.remove("ocultar");
         mensajeDelHeroe.classList.add("success");
 
         mensaje.classList.remove("error");
@@ -97,9 +97,9 @@ document.addEventListener("DOMContentLoaded", () => {
   function generarTablero()
   {
     console.log('Entrando en la funcion generar tablero');
-    botonJugar.classList.add("hidden");
+    botonJugar.classList.add("ocultar");
     
-    // Se generan 10 filas y 10 columnas, creando cada celda con la clase suelo.
+    // Se generan 10 filas y 10 columnas, creando cada celda con la clase casilla.
     let tabla = document.createElement("table");
     tabla.classList.add("tablero");
 
@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
       let filaElemento = document.createElement("tr");
       for (let columna = 0; columna < 10; columna++) {
         let celda = document.createElement("td");
-        celda.classList.add("suelo");
+        celda.classList.add("casillas");
 
         // Posicionamos el heroe y el cofre en sus respectivas posiciones iniciales.
         if (fila === 0 && columna === 0) {
@@ -163,6 +163,7 @@ document.addEventListener("DOMContentLoaded", () => {
     dadoImagen.src = `./img/dado${numeroDado}.png`;
     // Resalta las celdas a las que el heroe puede moverse dependiendo del numero que se haya generado de manera aleatoria.
     resaltarCeldas(numeroDado);
+    botonTirarDado.disabled = true;
   }
 
   // La funcion resaltarCeldas tiene como parametro pasos que es el numero que ha sacado el jugador al tirar el dado.
@@ -194,7 +195,6 @@ document.addEventListener("DOMContentLoaded", () => {
         // Calcula la posición hacia la izquierda y la agrega a posiblesMovimientos si está dentro de los límites del tablero.
         if (columna - i >= 0) posiblesMovimientos.push({ fila: fila, columna: columna - i });
     }
-
     // Pasa sobre cada posición válida almacenada en posiblesMovimientos
     // En mov representa cada posicion posible con fila y columna
     posiblesMovimientos.forEach((mov) => {
@@ -207,17 +207,19 @@ document.addEventListener("DOMContentLoaded", () => {
         if (celda) 
         {
           // Agrega la clase resaltado a la celda.
-          celda.classList.add("resaltado");
+          celda.classList.add("resaltado");   
           // Agrega un evento click a la celda resaltada que ejecuta la función moverHeroe que
           // permite que el jugador haga clic en esta celda para mover al héroe a esa posición.
           celda.addEventListener("click", moverHeroe);
         }
+        
       });
     }
 
     
     function moverHeroe(ev) 
     {
+      botonTirarDado.disabled = false;
       console.log('Entrando en la funcion moverHeroe');
         // Obtiene la nueva celda seleccionada por el jugador.
         let nuevaCelda = ev.target.closest("td");
