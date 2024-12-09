@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./estilos.css">
+    <script src="./script.js"></script>
+    <title>Juego Interactivo</title>
+</head>
+<body>
+    <h1>Bienvenido a la Aventura</h1>
+
+  <form id="formu">
+    <label for="nombreJugador">Introduce tu nombre:</label>
+    <input type="text" id="nombreJugador" placeholder="Tu nombre aquí" />
+    <button type="button" id="enviar">Introducir nombre</button>
+  </form>
+
+  <p id="mensaje" class="error"></p>
+
+
+  <h2 id="mensajeDelHeroe" class="hidden"></h2>
+
+  <button id="botonJugar" class="hidden">Jugar</button>
+
+  <div id="tablero"></div>
+
+</body>
+</html>
